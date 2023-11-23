@@ -81,7 +81,21 @@ export default class DictPlugin extends Plugin {
 			if (word.startsWith('checksum')) return;
 			set.add(word);
 		});
-		console.log(set);
+
+		// Save merged dict to 'Custom Dictionary.md' 
+		const merged = Array.from(set).join('\n');
+		await this.app.vault.modify(md, merged);
+
+		// Save merged to 'Custom Dictionary.txt'
+		const blob = new Blob([merged], { type: 'text/plain' });
+		const url = URL.createObjectURL(blob);
+		const tmpDownloadEl = document.body.createEl('a', {
+			href: url,
+		});
+		tmpDownloadEl.download = 'Custom Dictionary.txt';
+		tmpDownloadEl.click();
+		tmpDownloadEl.remove();
+		URL.revokeObjectURL(url);
 	}
 
 	async readFileAsText(file: File): Promise<string> {
