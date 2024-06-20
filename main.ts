@@ -2,23 +2,23 @@ import { App, Notice, Plugin, PluginSettingTab, Setting, TFile } from 'obsidian'
 
 // Remember to rename these classes and interfaces!
 
-interface DictSettings {
+interface CDSyncSettings {
 	toLowerCase: boolean;
 }
 
-const DEFAULT_SETTINGS: DictSettings = {
+const DEFAULT_SETTINGS: CDSyncSettings = {
 	toLowerCase: true
 }
 
-export default class DictPlugin extends Plugin {
-	settings: DictSettings;
+export default class CDSyncPlugin extends Plugin {
+	settings: CDSyncSettings;
 
 	async onload() {
 		await this.loadSettings();
 
 		// This creates an icon in the left ribbon.
 		const ribbonIconEl = this.addRibbonIcon('book-copy', 'Sync Custom Dictionary', (evt: MouseEvent) => {
-			this.syncDict();
+			this.syncCD();
 		});
 		// Perform additional things with the ribbon
 		ribbonIconEl.addClass('my-plugin-ribbon-class');
@@ -27,11 +27,11 @@ export default class DictPlugin extends Plugin {
 		this.addCommand({
 			id: 'sync',
 			name: 'Sync Custom Dictionary',
-			callback: () => this.syncDict(),
+			callback: () => this.syncCD(),
 		});
 		
 		// This adds a settings tab so the user can configure various aspects of the plugin
-		this.addSettingTab(new DictSettingTab(this.app, this));
+		this.addSettingTab(new CDSyncSettingTab(this.app, this));
 
 		// If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
 		// Using this function will automatically remove the event listener when this plugin is disabled.
@@ -43,7 +43,7 @@ export default class DictPlugin extends Plugin {
 		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
 	}
 	
-	async syncDict() {
+	async syncCD() {
 		
 		// load 'Custom Dictionary.md'
 		const md = this.app.vault.getAbstractFileByPath('Custom Dictionary.md');
@@ -126,10 +126,10 @@ export default class DictPlugin extends Plugin {
 	}
 }
 
-class DictSettingTab extends PluginSettingTab {
-	plugin: DictPlugin;
+class CDSyncSettingTab extends PluginSettingTab {
+	plugin: CDSyncPlugin;
 
-	constructor(app: App, plugin: DictPlugin) {
+	constructor(app: App, plugin: CDSyncPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
