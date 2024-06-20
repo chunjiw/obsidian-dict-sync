@@ -1,11 +1,11 @@
 {
-	"id": "dict-sync",
-	"name": "Dict Sync",
+	"id": "cd-sync",
+	"name": "Custom Dictionary Sync",
 	"version": "0.0.1",
 	"minAppVersion": "0.15.0",
-	"description": "Manually sync custom dictionary with a note",
-	"author": "lantana",
+	"description": "Manually sync custom dictionary across hosts",
+	"author": "Chunji Wang",
 	"authorUrl": "",
 	"fundingUrl": "",
-	"isDesktopOnly": false
+	"isDesktopOnly": true
 }
